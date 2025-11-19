@@ -3,6 +3,8 @@ from sqlalchemy.orm import relationship, declarative_base
 from sqlalchemy import Enum, DateTime, func
 from ..database import Base
 from datetime import datetime
+from ..enums import Gender, UserCategory
+
 
 class User(Base):
     __tablename__ = "users"
@@ -11,8 +13,8 @@ class User(Base):
     phone = Column(String(15), nullable=False, unique=True)
     email = Column(String(100), nullable=False, unique=True)
     password = Column(String(100), nullable=False)
-    gender = Column(Enum("male", "female"), nullable=False)
-    category = Column(Enum('buyer', 'farmer'), nullable=False)
+    gender = Column(Enum(Gender.MALE.value, Gender.FEMALE.value), nullable=False)
+    category = Column(Enum(UserCategory.BUYER.value, UserCategory.FARMER.value), nullable=False)
     location = Column(String(100), nullable=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False) 
     updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False) 

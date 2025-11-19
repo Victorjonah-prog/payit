@@ -1,6 +1,10 @@
 from fastapi import FastAPI
 from .database import Base, engine
 from .routes import user_routes, products_routes
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 app = FastAPI()
 
