@@ -5,13 +5,13 @@ from ..models.user import User
 from typing import List
 import bcrypt
 from pydantic import BaseModel, Field, EmailStr, field_validator
+from ..enums import Gender, UserCategory
 import re
 
 
 router = APIRouter()
 
 class UserCreate(BaseModel):
-    id: int
     name: str = Field(min_length=3, max_length=30)
     phone: str = Field(max_length=15,min_length=11, pattern= r"^0[0-9]{10}$")
     email: str = EmailStr
@@ -56,10 +56,19 @@ def create_user(user: UserCreate, db: db_dependency):
     salts= bcrypt.gensalt(rounds=12)
     hashed_passwords= bcrypt.hashpw(user.password.encode('utf-8'),salts)
     user.password= hashed_passwords.decode('utf-8')
-    db_user = db.query(User).filter(User.email == user.email).first()
-    if db_user:
+    db_user_by_email = db.query(User).filter(User.email == user.email).first()
+    if db_user_by_email:
         raise HTTPException(status_code=400, detail="Email already registered")
-    db_user = User(**user.dict())
+
+    db_user_by_phone = db.query(User).filter(User.phone == user.phone).first()
+    if db_user_by_phone:
+        raise HTTPException(status_code=400, detail="Phone number already registered")
+    
+    user_data = user.dict()
+    user_data['gender'] = Gender(user_data['gender'])
+    user_data['category'] = UserCategory(user_data['category'])
+    
+    db_user = User(**user_data)
     db.add(db_user)
     db.commit()
     db.refresh(db_user)

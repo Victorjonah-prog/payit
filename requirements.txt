@@ -6,3 +6,4 @@ cryptography
 python-dotenv==1.0.1
 pydantic[email]
 bcrypt
+python-jose
