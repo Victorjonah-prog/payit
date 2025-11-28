@@ -13,6 +13,12 @@ class User(BaseModel):
     gender: Gender
     location: str = Field(min_length=1)
 
+    @validator('name', 'location')
+    def not_empty(cls, v):
+        if not v or not v.strip():
+            raise ValueError('cannot be empty')
+        return v
+
     @validator('phone')
     def phone_is_valid_numeric_value(cls, value):
         if value.isdigit() is not True:

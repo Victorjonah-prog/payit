@@ -1,14 +1,14 @@
 import enum
 
-class Gender(enum.Enum):
+class Gender(str, enum.Enum):
     M = "M"
     F = "F"
 
-class OrderStatus(enum.Enum):
+class OrderStatus(str, enum.Enum):
     pending = "pending"
     delivered = "delivered"
 
-class Category(enum.Enum):
+class Category(str, enum.Enum):
     grains = "grains"
     tubers = "tubers"
     cereals = "cereals"

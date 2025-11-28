@@ -1,45 +1,19 @@
+# docker-compose.yml
 version: '3.8'
 
 services:
-  payit.api:
-    build: .
-    container_name: payit.api
-    ports:
-      - "8000:8000"
-    environment:
-      - DB_HOST=${DB_HOST}
-      - DB_PORT=${DB_PORT}
-      - DB_USER=${DB_USER}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - DB_DATABASE=${DB_DATABASE}
-      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
-      - JWT_EXPIRATION_TIME=${JWT_EXPIRATION_TIME}
-      - JWT_ALGORITHM=${JWT_ALGORITHM}
-    volumes:
-      - ./app:/app/app
-    depends_on:
-      payit_db:
-        condition: service_healthy
-    restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 40s
-
   payit_db:
     container_name: payit_db
     image: mysql:8.0
     environment:
-      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
-      - MYSQL_DATABASE=${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
     ports:
-      - "${FORWARD_DB_PORT}:3306"
+      - "${FORWARD_DB_PORT:-3306}:3306"
     volumes:
       - payit_db_data:/var/lib/mysql
     restart: unless-stopped
-    command: 
+    command:
       - --default-authentication-plugin=mysql_native_password
       - --innodb_buffer_pool_size=256M
       - --innodb_log_file_size=128M
@@ -49,8 +23,34 @@ services:
       timeout: 10s
       retries: 30
       start_period: 40s
-      start_interval: 10s
 
-    
+  payit.api:
+    build: .
+    container_name: payit.api
+    ports:
+      - "8000:8000"
+    environment:
+      DB_HOST: payit_db
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_DATABASE: ${DB_DATABASE}
+      JWT_SECRET_KEY: ${JWT_SECRET_KEY}
+      JWT_EXPIRATION_TIME: ${JWT_EXPIRATION_TIME}
+      JWT_ALGORITHM: ${JWT_ALGORITHM}
+    volumes:
+      - ./app:/app/app
+      - ./app/static/images:/app/static/images
+    depends_on:
+      payit_db:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
 volumes:
   payit_db_data:

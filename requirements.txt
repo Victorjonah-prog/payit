@@ -8,3 +8,4 @@ pydantic[email]
 sqlalchemy
 bcrypt
 python-jose
+aiofiles

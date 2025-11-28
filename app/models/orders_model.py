@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, DateTime, ForeignKey, String, func, DECIMAL, Enum
 from ..enums import OrderStatus
 from .base import Base
+from sqlalchemy.orm import relationship
 
 class Order(Base):
     __tablename__ = 'orders'
@@ -14,3 +15,7 @@ class Order(Base):
     amount = Column(DECIMAL(10, 2), nullable=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
     updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=False)
+
+
+    product = relationship("Product", back_populates="orders")
+    buyer = relationship("Buyer", back_populates="orders")
