@@ -1,16 +1,15 @@
 from fastapi import FastAPI, status, HTTPException
 from .models.base import Base
 from .database import engine
-from .models.users_model import User
+# from app.models.users_model import User
 from .models.products_model import Product
-from .models.farmers_model import Farmer
-from .models.buyers_model import Buyer
-from .models.orders_model import Order
-# from .models.products_category_model import ProductCategory
+import os
 from sqlalchemy.exc import OperationalError
-from .routes import users_routes, products_routes, auth_routes, orders_routes
+from .routes import users_routes, products_routes, auth_routes, orders_routes, oauth
 from fastapi.staticfiles import StaticFiles
 import time
+from fastapi.middleware.cors import CORSMiddleware
+from starlette.middleware.sessions import SessionMiddleware
 
 
 import logging
@@ -40,11 +39,35 @@ app = FastAPI(
     description = "market place..."
     )
 
+
 app.include_router(users_routes.router)
-app.include_router(products_routes.router)
+app.include_router(oauth.router)
 app.include_router(auth_routes.router)
-app.include_router(orders_routes.router)
+app.include_router(products_routes.router)
+
+
+app.add_middleware(
+    SessionMiddleware,
+    secret_key=os.getenv('JWT_SECRET_KEY',"1234567"),
+    https_only=False
+)
+
+
+origins = [
+    "http://localhost:8000"
+
+
+]
+
+app.add_middleware(CORSMiddleware,allow_origins=origins,
+                   allow_credentials=True,
+                   allow_methods = ["*"],
+                   allow_headers = ["*"]
+
+                   )
+
 app.mount("/static", StaticFiles(directory="static"), name="static")
+
 
 @app.on_event("startup")
 def on_startup():

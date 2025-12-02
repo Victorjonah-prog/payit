@@ -18,6 +18,10 @@ def get_db():
     db = SessionLocal()
     try:
         yield db
+        db.commit() #commit changes
+    except Exception:
+        db.rollback() #rollback on errors
+        raise
     finally:
         db.close()
 

@@ -9,3 +9,7 @@ sqlalchemy
 bcrypt
 python-jose
 aiofiles
+
+authlib
+httpx
+itsdangerous

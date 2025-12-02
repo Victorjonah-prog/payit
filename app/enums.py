@@ -9,6 +9,11 @@ class OrderStatus(str, enum.Enum):
     delivered = "delivered"
 
 class Category(str, enum.Enum):
+    FARMER = "farmer"
+    BUYER = "buyer"
+
+
+class ProductCategory(str, enum.Enum):
     grains = "grains"
     tubers = "tubers"
     cereals = "cereals"

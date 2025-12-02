@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from app.enums import Category
+from app.enums import ProductCategory
 from ..database import get_db
 from fastapi import APIRouter, File, Form, HTTPException, UploadFile, status, Depends
 from ..models import products_model, users_model, farmers_model, buyers_model, products_category_model
@@ -20,7 +20,7 @@ UPLOAD_DIR= "static/images"
 
 @router.post("/", status_code=status.HTTP_201_CREATED)
 async def create_product(
-    category: Category = Form(...),
+    category: ProductCategory = Form(...),
     status: str = Form(...),
     name: str = Form(...),
     image: UploadFile = File(...),
@@ -90,7 +90,7 @@ def get_all_products(
 
 @router.get("/category/{category}")
 def get_products_by_category(
-    category: Category,
+    category: ProductCategory,
     db: Session = Depends(get_db)
 ):
     products = db.query(products_model.Product).filter_by(category=category).all()
