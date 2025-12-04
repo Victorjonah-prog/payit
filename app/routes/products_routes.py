@@ -80,7 +80,7 @@ async def create_product(
         "product": new_product
     }
 
-@router.get("/")
+@router.get("/getProduct")
 def get_all_products(
     db: Session = Depends(get_db)
 ):

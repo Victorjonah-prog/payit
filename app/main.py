@@ -44,11 +44,12 @@ app.include_router(users_routes.router)
 app.include_router(oauth.router)
 app.include_router(auth_routes.router)
 app.include_router(products_routes.router)
+app.include_router(orders_routes.router)
 
 
 app.add_middleware(
     SessionMiddleware,
-    secret_key=os.getenv('JWT_SECRET_KEY',"1234567"),
+    secret_key=os.getenv('JWT_SECRET_KEY'),
     https_only=False
 )
 
@@ -72,6 +73,13 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 @app.on_event("startup")
 def on_startup():
     db_and_table_init()
+
+@app.get("/")
+def home():
+    return{
+        "status":"success",
+        "message":"hello world"
+    }
 
    
 

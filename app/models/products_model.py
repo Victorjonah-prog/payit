@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, DateTime, ForeignKey, String, func, Enum, DECIMAL
 from .base import Base
-from ..enums import Category
+from ..enums import Category,ProductCategory
 from sqlalchemy.orm import relationship 
 
 
@@ -8,7 +8,8 @@ class Product(Base):
     __tablename__ = 'products'
     id = Column(Integer, primary_key=True, nullable=False, index=True)
     farmer_id = Column(Integer, ForeignKey('farmers.id'), nullable=False)
-    category = Column(Enum(Category), nullable=False)
+    #category = Column(Enum(Category), nullable=False)
+    category = Column(Enum(ProductCategory), nullable=False)
     status = Column(Enum("available","unavailable"), nullable=False, default="available")
     name = Column(String(30), min_length=3, max_length=30, nullable=False)
     image_url = Column(String(255), nullable=False)
