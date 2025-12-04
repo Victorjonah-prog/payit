@@ -13,3 +13,5 @@ aiofiles
 authlib
 httpx
 itsdangerous
+
+cloudinary==1.41.0

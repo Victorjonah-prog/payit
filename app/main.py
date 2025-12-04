@@ -10,6 +10,7 @@ from fastapi.staticfiles import StaticFiles
 import time
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
+from app.config import cloudinary
 
 
 import logging
