@@ -1,7 +1,13 @@
 import os
 from sqlalchemy import create_engine
-from .models.base import Base
+# from .models.base import Base
 from sqlalchemy.orm import Session, sessionmaker
+# from app.models.users_model import User
+# from app import models
+from .models import base
+
+
+
 
 DB_USER = os.getenv("DB_USER")
 DB_PASSWORD = os.getenv("DB_PASSWORD")

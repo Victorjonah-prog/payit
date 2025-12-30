@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, DateTime, ForeignKey, String, func, Enum
-from .base import Base
-from ..enums import Gender
+from app.models.base import Base
+from app.enums import Gender,Role
 from sqlalchemy.orm import relationship
 
 class User(Base):
@@ -13,6 +13,7 @@ class User(Base):
     password = Column(String(100), nullable=True)
     gender = Column(Enum(Gender), nullable=True)
     location = Column(String(255), nullable=True)
+    Role= Column(Enum(Role), default=Role.user,nullable=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=True)
     updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now(), nullable=True)
 

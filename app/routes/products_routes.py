@@ -1,13 +1,13 @@
 from sqlalchemy.orm import Session
 from app.enums import ProductCategory
-from ..database import get_db
+from app.database import get_db
 from fastapi import APIRouter, File, Form, HTTPException, UploadFile, status, Depends
-from ..models import products_model, users_model, farmers_model, buyers_model, products_category_model
-from ..middlewares.auth import AuthMiddleware
+from app.models import products_model, users_model, farmers_model, buyers_model, products_category_model
+from app.middlewares.auth import AuthMiddleware
 from datetime import datetime
 from typing import List
 import cloudinary.uploader
-from ..models.users_model import User
+from app.models.users_model import User
 
 
 router = APIRouter(tags=["Products"])

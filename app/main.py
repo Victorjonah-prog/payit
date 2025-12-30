@@ -1,11 +1,11 @@
 from fastapi import FastAPI, status, HTTPException
-from .models.base import Base
-from .database import engine
+from app.models.base import Base
+from app.database import engine
 # from app.models.users_model import User
-from .models.products_model import Product
+from app.models.products_model import Product
 import os
 from sqlalchemy.exc import OperationalError
-from .routes import users_routes, products_routes, auth_routes, orders_routes, oauth
+from app.routes import users_routes, products_routes, auth_routes, orders_routes, oauth
 from fastapi.staticfiles import StaticFiles
 import time
 from fastapi.middleware.cors import CORSMiddleware

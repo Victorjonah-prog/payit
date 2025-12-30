@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, DateTime, ForeignKey, String, func, Enum, DECIMAL
-from .base import Base
-from ..enums import Category,ProductCategory
+from app.models.base import Base
+from app.enums import Category,ProductCategory
 from sqlalchemy.orm import relationship 
 
 

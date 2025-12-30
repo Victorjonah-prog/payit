@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, DateTime, ForeignKey, String, func
-from .base import Base
+from app.models.base import Base
 from sqlalchemy.orm import relationship
 
 class Farmer(Base):

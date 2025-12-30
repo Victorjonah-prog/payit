@@ -1,9 +1,9 @@
 from sqlalchemy.orm import Session
-from ..database import get_db
+from app.database import get_db
 from fastapi import APIRouter, HTTPException, status, Depends
-from ..models import users_model
-from ..schemas.users_schema import User, UserResponse
-from ..middlewares.auth import AuthMiddleware
+from app.models import users_model
+from app.schemas.users_schema import User, UserResponse
+from app.middlewares.auth import AuthMiddleware
 from datetime import datetime
 from typing import List
 import logging

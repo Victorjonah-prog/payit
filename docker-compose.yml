@@ -50,7 +50,7 @@ services:
       - 8.8.8.8      
       - 1.1.1.1      
     volumes:
-      - ./app:/app/app
+      - .:/app
       - ./app/static/images:/app/static/images
     depends_on:
       payit_db:

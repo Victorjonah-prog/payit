@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field, EmailStr, validator, model_validator
 from datetime import datetime
-from ..enums import Gender, Category
+from app.enums import Gender, Category, Role
 import re
 from typing import List, Optional, Dict
 
@@ -12,6 +12,7 @@ class User(BaseModel):
     confirm_password: str = Field(min_length=6)
     gender: Gender
     location: str = Field(min_length=1)
+    Role: Role
 
     @validator('name', 'location')
     def not_empty(cls, v):

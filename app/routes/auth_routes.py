@@ -1,9 +1,9 @@
 from sqlalchemy.orm import Session
-from ..database import get_db
+from app.database import get_db
 from fastapi import APIRouter, HTTPException, status, Depends
-from ..models import users_model
-from ..auth.jwt import create_access_token
-from ..schemas.auth import LoginRequest, LoginResponse
+from app.models import users_model
+from app.auth.jwt import create_access_token
+from app.schemas.auth import LoginRequest, LoginResponse
 from datetime import datetime
 # from typing import List
 import logging

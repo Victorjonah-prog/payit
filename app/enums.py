@@ -12,6 +12,10 @@ class Category(str, enum.Enum):
     FARMER = "farmer"
     BUYER = "buyer"
 
+class Role(str, enum.Enum):
+    user="user"
+    admin= "admin"
+
 
 class ProductCategory(str, enum.Enum):
     grains = "grains"

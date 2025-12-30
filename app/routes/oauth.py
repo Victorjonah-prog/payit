@@ -1,19 +1,19 @@
 from sqlalchemy.orm import Session
-from ..database import get_db
+from app.database import get_db
 from fastapi import APIRouter, HTTPException, status, Depends, Request
-from ..schemas.users_schema import User, UserResponse
-from ..middlewares.auth import AuthMiddleware
+from app.schemas.users_schema import User, UserResponse
+from app.middlewares.auth import AuthMiddleware
 from datetime import datetime
 from typing import List
 import logging
 import bcrypt
 import pymysql
 from ..config.oauth import oauth
-from ..enums import Gender, Category
-from ..auth.jwt import create_access_token
+from app.enums import Gender, Category
+from app.auth.jwt import create_access_token
 from fastapi.responses import RedirectResponse
 from ..config.oauth import  AUTH0_DOMAIN, AUTH0_CLIENT_ID 
-from ..models.users_model import User
+from app.models.users_model import User
 from urllib.parse import urlencode
 
 logger = logging.getLogger(__name__)
